@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="CVC_FLIGHT_FORTIZ" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="crossClient" defaultLanguage="$$language$$" visibility="reportingEnabled" calculationScenarioType="TREE_BASED" dataCategory="CUBE" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation" hierarchiesSQLEnabled="false" translationRelevant="true">
+<origin/>
+  <descriptions defaultDescription="CVC_FLIGHT_FORTIZ"/>
+  <metadata changedAt="2017-03-30 13:36:03.729"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="SBOOK" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_ECC" columnObjectName="SBOOK"/>
+    </DataSource>
+    <DataSource id="SFLIGHT" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_ECC" columnObjectName="SFLIGHT"/>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CARRID"/>
+        <viewAttribute id="CONNID"/>
+        <viewAttribute id="FLDATE"/>
+        <viewAttribute id="CUSTTYPE"/>
+        <viewAttribute id="LOCCURAM"/>
+        <viewAttribute id="LOCCURKEY"/>
+        <viewAttribute id="AGENCYNUM"/>
+        <viewAttribute id="PLANETYPE"/>
+        <viewAttribute id="JOIN$MANDT$MANDT" hidden="true"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#SBOOK">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CARRID" source="CARRID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONNID" source="CONNID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FLDATE" source="FLDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CUSTTYPE" source="CUSTTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOCCURAM" source="LOCCURAM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOCCURKEY" source="LOCCURKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AGENCYNUM" source="AGENCYNUM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      </input>
+      <input node="#SFLIGHT">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PLANETYPE" source="PLANETYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CARRID" source="CARRID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONNID" source="CONNID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FLDATE" source="FLDATE"/>
+      </input>
+      <joinAttribute name="JOIN$MANDT$MANDT"/>
+      <joinAttribute name="CARRID"/>
+      <joinAttribute name="CONNID"/>
+      <joinAttribute name="FLDATE"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="CARRID" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Airline Code"/>
+        <keyMapping columnObjectName="Join_1" columnName="CARRID"/>
+      </attribute>
+      <attribute id="CONNID" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Flight Connection Number"/>
+        <keyMapping columnObjectName="Join_1" columnName="CONNID"/>
+      </attribute>
+      <attribute id="FLDATE" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Flight date"/>
+        <keyMapping columnObjectName="Join_1" columnName="FLDATE"/>
+      </attribute>
+      <attribute id="CUSTTYPE" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Customer type"/>
+        <keyMapping columnObjectName="Join_1" columnName="CUSTTYPE"/>
+      </attribute>
+      <attribute id="LOCCURKEY" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Local currency of airline"/>
+        <keyMapping columnObjectName="Join_1" columnName="LOCCURKEY"/>
+      </attribute>
+      <attribute id="AGENCYNUM" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Travel Agency Number"/>
+        <keyMapping columnObjectName="Join_1" columnName="AGENCYNUM"/>
+      </attribute>
+      <attribute id="PLANETYPE" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Aircraft Type"/>
+        <keyMapping columnObjectName="Join_1" columnName="PLANETYPE"/>
+      </attribute>
+    
+      <attribute id="LOCCURAM" order="8" attributeHierarchyActive="false" semanticType="empty" displayAttribute="false">
+        <descriptions defaultDescription="Price of booking in local currency of airline"/>
+        <keyMapping columnObjectName="Join_1" columnName="LOCCURAM"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/></shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="40" y="200"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

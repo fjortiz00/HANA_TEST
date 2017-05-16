@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="CVC_SBOOK_FORTIZ" applyPrivilegeType="ANALYTIC_PRIVILEGE" checkAnalyticPrivileges="true" defaultClient="crossClient" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="reportingEnabled" calculationScenarioType="TREE_BASED" dataCategory="CUBE" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Aggregation">
+  <origin/>
+  <descriptions defaultDescription="Flight Booking Details"/>
+  <metadata changedAt="2017-05-03 09:40:37.872"/>
+  <localVariables>
+    <variable id="V_CARRID">
+      <descriptions defaultDescription="Carrier ID"/>
+      <variableProperties datatype="VARCHAR" mandatory="false">
+        <valueDomain type="AttributeValue">
+          <attribute name="CARRID"/>
+        </valueDomain>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="IP_DISCOUNT" parameter="true">
+      <descriptions defaultDescription="Discount"/>
+      <variableProperties datatype="INTEGER" mandatory="false">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="23"/>
+  <dataSources>
+    <DataSource id="SBOOK" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_ECC" columnObjectName="SBOOK"/>
+    </DataSource>
+    <DataSource id="SCUSTOM" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="SAP_ECC" columnObjectName="SCUSTOM"/>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinOrder="OUTSIDE_IN" joinType="inner">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="CARRID"/>
+        <viewAttribute id="CONNID"/>
+        <viewAttribute id="FLDATE"/>
+        <viewAttribute id="CUSTOMID"/>
+        <viewAttribute id="CUSTTYPE"/>
+        <viewAttribute id="CLASS"/>
+        <viewAttribute id="LOCCURAM"/>
+        <viewAttribute id="LOCCURKEY"/>
+        <viewAttribute id="NAME"/>
+        <viewAttribute id="CITY"/>
+        <viewAttribute id="ORDER_DATE"/>
+        <viewAttribute hidden="true" id="JOIN$MANDT$MANDT"/>
+      </viewAttributes>
+      <calculatedViewAttributes>
+        <calculatedViewAttribute datatype="DOUBLE" id="NET_PRICE" expressionLanguage="COLUMN_ENGINE">
+          <formula>&quot;LOCCURAM&quot; - ( &quot;LOCCURAM&quot; * $$IP_DISCOUNT$$ ) / 100</formula>
+        </calculatedViewAttribute>
+      </calculatedViewAttributes>
+      <input node="#SBOOK">
+        <mapping xsi:type="Calculation:AttributeMapping" target="CARRID" source="CARRID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CONNID" source="CONNID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="FLDATE" source="FLDATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMID" source="CUSTOMID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CUSTTYPE" source="CUSTTYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CLASS" source="CLASS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOCCURAM" source="LOCCURAM"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="LOCCURKEY" source="LOCCURKEY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ORDER_DATE" source="ORDER_DATE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+      </input>
+      <input node="#SCUSTOM">
+        <mapping xsi:type="Calculation:AttributeMapping" target="NAME" source="NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="CITY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$MANDT$MANDT" source="MANDT"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CUSTOMID" source="ID"/>
+      </input>
+      <joinAttribute name="JOIN$MANDT$MANDT"/>
+      <joinAttribute name="CUSTOMID"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="CARRID" key="true" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Airline Code"/>
+        <localVariable>#V_CARRID</localVariable>
+        <keyMapping columnObjectName="Join_1" columnName="CARRID"/>
+      </attribute>
+      <attribute id="CONNID" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Flight Connection Number"/>
+        <keyMapping columnObjectName="Join_1" columnName="CONNID"/>
+      </attribute>
+      <attribute id="FLDATE" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Flight date"/>
+        <keyMapping columnObjectName="Join_1" columnName="FLDATE"/>
+      </attribute>
+      <attribute id="CUSTOMID" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Customer Number"/>
+        <keyMapping columnObjectName="Join_1" columnName="CUSTOMID"/>
+      </attribute>
+      <attribute id="CUSTTYPE" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Customer type"/>
+        <keyMapping columnObjectName="Join_1" columnName="CUSTTYPE"/>
+      </attribute>
+      <attribute id="CLASS" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Flight Class"/>
+        <keyMapping columnObjectName="Join_1" columnName="CLASS"/>
+      </attribute>
+      <attribute id="LOCCURKEY" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Local currency of airline"/>
+        <keyMapping columnObjectName="Join_1" columnName="LOCCURKEY"/>
+      </attribute>
+      <attribute id="NAME" order="8" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Customer name"/>
+        <keyMapping columnObjectName="Join_1" columnName="NAME"/>
+      </attribute>
+      <attribute id="CITY" order="9" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="City"/>
+        <keyMapping columnObjectName="Join_1" columnName="CITY"/>
+      </attribute>
+      <attribute id="ORDER_DATE" order="12" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="Booking Date"/>
+        <keyMapping columnObjectName="Join_1" columnName="ORDER_DATE"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="LOCCURAM" order="10" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="Price of booking in local currency of airline"/>
+        <measureMapping columnObjectName="Join_1" columnName="LOCCURAM"/>
+      </measure>
+      <measure id="NET_PRICE" order="11" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="NET_PRICE"/>
+        <measureMapping columnObjectName="Join_1" columnName="NET_PRICE"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="40" y="220"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>
